@@ -1,5 +1,5 @@
 {
-  "name": "invoices-apps-frontend",
+  "name": "order-apps-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
