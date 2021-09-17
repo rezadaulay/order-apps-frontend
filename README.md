@@ -6,7 +6,7 @@
 
 ### Menjalankan aplikasi
 - Jalankan command `npm start`
-- Aplikasi akan diakses meggunakan port 3000
+- Aplikasi akan berjalan menggunakan port 3000
 ```sh
 http://localhost:3000
 ```

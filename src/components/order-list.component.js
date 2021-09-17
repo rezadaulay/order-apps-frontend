@@ -11,7 +11,7 @@ class OrderList extends React.Component {
 
         this.state = {
             sortBy: 'transaction_date',
-            sortDirection: '',
+            sortDirection: 'desc',
             searchForminvNumber: '',
             searchFormpaymentStatus: '',
             orders: [],
@@ -60,7 +60,11 @@ class OrderList extends React.Component {
                                 this.handleSort('inv_number')
                             }
                         }>Inv. Number <img src={SortImage(this.state.sortBy === 'inv_number', this.state.sortDirection)} className="sort-icon" alt=""/></th>
-                        <th className="text-center">Date</th>
+                        <th className="text-center sort-header" onClick={
+                            () => {
+                                this.handleSort('transaction_date')
+                            }
+                        }>Date <img src={SortImage(this.state.sortBy === 'transaction_date', this.state.sortDirection)} className="sort-icon" alt=""/></th>
                         <th>Customer Email</th>
                         <th className="sort-header" onClick={
                             () => {
@@ -180,7 +184,7 @@ class OrderList extends React.Component {
             sortDirection: sortDirection
         }).then(response => {
             this.setState({
-              orders: response.data.orders,
+              orders: response.data.rows,
               totalItems: response.data.totalItems,
               totalPages: response.data.totalPages
               // currentPage: response.data.currentPage

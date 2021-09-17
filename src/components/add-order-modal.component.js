@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import OrderDataService from '../services/order.service'
 
 class AddOrderModal extends React.Component {
@@ -61,7 +61,7 @@ class AddOrderModal extends React.Component {
                 <Form.Group className="mb-3">
                     <Form.Label>Payment Status <strong>*</strong></Form.Label>
                     <Form.Select required id="paymentStatus" value={this.state.paymentStatus} onChange={this.handleFormChange}>
-                        <option value="">All Payment Status</option>
+                        <option value="">Select Payment Status</option>
                         <option value="paid">Paid</option>
                         <option value="unpaid">Unpaid</option>
                     </Form.Select>
@@ -91,37 +91,6 @@ class AddOrderModal extends React.Component {
           </Modal>
         </div>)
     }
-    handleDateChange (val) {
-        this.setState({transactionDate: val})
-    }
-    handleSubmit (event) {
-        event.preventDefault()
-        if (this.state.transactionDate === '' || this.state.transactionDate === null) {
-            return window.alert('please fill all required field')
-        }
-
-        let transactionDate = new Date(this.state.transactionDate);
-        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(transactionDate)
-        let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(transactionDate)
-        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(transactionDate)
-
-        OrderDataService.create({
-            inv_number: this.state.invNumber,
-            transaction_date: `${ye}-${mo}-${da}`,
-            customer_name: this.state.customerName,
-            customer_username: this.state.customerUsername,
-            customer_email: this.state.customerEmail,
-            payment_status: this.state.paymentStatus,
-            fulfillment_status: this.state.fulfillmentStatus,
-            total_amount: this.state.totalAmount
-        }).then(() => {
-            this.handleClose()
-            this.props.onSaved()
-            window.alert('Data berhasil disimpan')
-        }).catch(e => {
-            console.error(e)
-        })
-    }
     handleOpen () {
         this.setState({
             showModal: true,
@@ -144,6 +113,37 @@ class AddOrderModal extends React.Component {
         const id = target.id
         this.setState({
             [id]: value
+        })
+    }
+    handleDateChange (val) {
+        this.setState({transactionDate: val})
+    }
+    handleSubmit (event) {
+        event.preventDefault()
+        if (this.state.transactionDate === '' || this.state.transactionDate === null) {
+            return window.alert('please fill all required field')
+        }
+
+        let transactionDate = new Date(this.state.transactionDate)
+        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(transactionDate)
+        let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(transactionDate)
+        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(transactionDate)
+
+        OrderDataService.create({
+            inv_number: this.state.invNumber,
+            transaction_date: `${ye}-${mo}-${da}`,
+            customer_name: this.state.customerName,
+            customer_username: this.state.customerUsername,
+            customer_email: this.state.customerEmail,
+            payment_status: this.state.paymentStatus,
+            fulfillment_status: this.state.fulfillmentStatus,
+            total_amount: this.state.totalAmount
+        }).then(() => {
+            this.handleClose()
+            this.props.onSaved()
+            window.alert('Data berhasil disimpan')
+        }).catch(e => {
+            console.error(e)
         })
     }
 }
